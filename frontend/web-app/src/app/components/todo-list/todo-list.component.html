@@ -1,0 +1,55 @@
+<div class="todo-container">
+  <h1>Todo List</h1>
+  
+  @if (error) {
+    <div class="error-message">
+      {{ error }}
+      <button (click)="loadTodoItems()">Retry</button>
+    </div>
+  }
+
+  <div class="add-todo-form">
+    <input
+      type="text"
+      [(ngModel)]="newTodoTitle"
+      placeholder="Enter todo title..."
+      (keyup.enter)="addTodoItem()"
+    />
+    <input
+      type="text"
+      [(ngModel)]="newTodoDescription"
+      placeholder="Enter description (optional)..."
+      (keyup.enter)="addTodoItem()"
+    />
+    <button (click)="addTodoItem()" [disabled]="!newTodoTitle.trim()">
+      Add Todo
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading">Loading...</div>
+  } @else {
+    <ul class="todo-list">
+      @for (item of todoItems; track item.id) {
+        <li [class.completed]="item.isComplete">
+          <div class="todo-content">
+            <input
+              type="checkbox"
+              [checked]="item.isComplete"
+              (change)="toggleComplete(item)"
+            />
+            <div class="todo-text">
+              <span class="title">{{ item.title }}</span>
+              @if (item.description) {
+                <span class="description">{{ item.description }}</span>
+              }
+            </div>
+          </div>
+          <button class="delete-btn" (click)="deleteTodoItem(item)">Delete</button>
+        </li>
+      } @empty {
+        <li class="empty-message">No todo items yet. Add one above!</li>
+      }
+    </ul>
+  }
+</div>

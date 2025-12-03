@@ -1,24 +1,36 @@
 {
-  // Name this configuration
-  "name": "Codespace for Skills!",
-  // Use the base codespace image
-  "image": "mcr.microsoft.com/vscode/devcontainers/universal:latest",
-
-  "remoteUser": "codespace",
-  "overrideCommand": false,
-  
- // Add the IDs of extensions you want installed when the container is created.
- "customizations": {
-     "vscode": {
-         "extensions": [
-             "GitHub.copilot"
-         ]
-     },
-     "codespaces": {
-         "openFiles": [
-             "codespace.md"
-         ]
-     }
- },
- "postCreateCommand": "echo '# Writing code upon codespace creation!'  >> codespace.md"
+  "name": "Angular + .NET + SQL Server",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot",
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "Angular.ng-template",
+        "ms-mssql.mssql"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    },
+    "codespaces": {
+      "openFiles": [
+        "README.md"
+      ]
+    }
+  },
+  "forwardPorts": [5011, 4200, 1433],
+  "postCreateCommand": "cd backend/Api && dotnet restore && cd ../../frontend/web-app && npm install",
+  "features": {
+    "ghcr.io/devcontainers/features/dotnet:2": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  }
 }
