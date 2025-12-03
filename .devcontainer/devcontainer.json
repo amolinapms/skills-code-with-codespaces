@@ -23,7 +23,7 @@
       ]
     }
   },
-  "forwardPorts": [5000, 4200, 1433],
+  "forwardPorts": [5011, 4200, 1433],
   "postCreateCommand": "cd backend/Api && dotnet restore && cd ../../frontend/web-app && npm install",
   "features": {
     "ghcr.io/devcontainers/features/dotnet:2": {
